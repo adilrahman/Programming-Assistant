@@ -1,0 +1,6 @@
+#!/usr/bin/bash
+
+export NOTION_INTEGRATION_TOKEN=<your_token>
+export NOTION_DATABASE_ID=<your_database_id>
+
+python3 main.py
