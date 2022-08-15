@@ -5,19 +5,22 @@ import sys
 import requests
 
 class MyGithub:
-    def __init__(self, token  : str,my_info : dict, template_datas : dict = None) -> None:
+    def __init__(self, token  : str,my_info : dict, local_path : str ,template_datas : dict = None, ) -> None:
         '''
         inputs :
-            token -> github authentication token
+            token = github authentication token
             
-            my_info -> { "name" : your github name}
+            my_info = { "name" : your github name}
 
+            local_path = "local folder path where the cloning repository should store"
+            
             template_data -> { "template_owner" : template owner name,
                                 "template_name" : template name }
         '''
         self.token = token
         self.template_data = template_datas
         self.myInfo = my_info
+        self.local_dir_path = local_path
 
 
         self.headers = {
@@ -31,9 +34,9 @@ class MyGithub:
     def create_repo_using_template(self, repo_name, desc = "") -> str:
         '''
         input:
-            repo_name -> repository name
+            repo_name = repository name
 
-            desc -> repository description
+            desc = repository description
         
         output:
              true (created) / false (not created) 
@@ -67,29 +70,63 @@ class MyGithub:
         
         return True
 
+
+    def clone_repository(self, url : str) -> bool:
+        '''
+        inputs:
+            url = "github repository url"
+
+           
+        
+        output:
+            true (created) / false (not created) 
+        '''
+
+        os.chdir(self.local_dir_path) # change the dir to the specified location
+        os.system(f"git clone {url}") # cloning repository 
+
+        # parsing the repository name from the url
+        dir_name = url.split("/")[-1]
+        dir_name = dir_name.replace(".git","")
+        
+        # open the cloned repository (nautilus -> file manager)
+        os.system(f"nautilus {dir_name} &")
+
+        return True
+
+
+
    
 
 
 if __name__ == "__main__":
      # setting path to import config
     sys.path.append('../../')
+    x = int(input("option : "))
     import config
-
     token          = config.GITHUB_AUTH_TOKEN
     my_github_name = config.GITHUB_MY_NAME
     template_owner = config.GITHUB_TEMPLATE_OWNER_NAME
     template_name  = config.GITHUB_TEMPLATE_REPO_NAME
+    local_path     = config.LOCAL_CLONING_PATH
 
     template_data = { "template_owner" : template_owner,
-                      "template_name" : template_name }
+                        "template_name" : template_name }
 
     myInfo = { "name" : my_github_name }
-    
-    
-    mygithub = MyGithub(token=token,my_info=myInfo,template_datas=template_data)
+        
+        
+    mygithub = MyGithub(token=token,my_info=myInfo,template_datas=template_data,local_path=local_path)
 
-    repo_name = "test case 5"
-    desc = "nothing"
-    res = mygithub.create_repo_using_template(repo_name=repo_name, desc=desc)
-    print(res)
-    
+
+    if x == 1: # create repo using template
+       
+        repo_name = "test case 5"
+        desc = "nothing"
+        res = mygithub.create_repo_using_template(repo_name=repo_name, desc=desc)
+        print(res)
+
+    if x == 2: # copy local copy of repo
+        mygithub.clone_repository(url = "https://github.com/adilrahman/template-repo.git")
+
+        
