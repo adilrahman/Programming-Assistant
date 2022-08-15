@@ -27,67 +27,88 @@ template_data = { "template_owner" : github_template_owner_name,
 
 myGithub = MyGithub(token=github_token, my_info=my_info, template_datas=template_data,local_path=local_path) 
 
+non_active = 0
+
 def recheck(type,value):
      while True:
         sr.speak(f'your {type} is ' + value)
         sr.speak(" is that right?")
-        if sr.speech_recognition() == "yes":
+        command = sr.speech_recognition()
+        command = nullcheck(command)
+        if command == "yes":
             return value
         sr.speak("ok tell me once more sir!")
         value = sr.speech_recognition()
+        value = nullcheck(value)
+
+def nullcheck(value):
+    while value == "":
+        sr.speak("i didn't get it sir, please tell me once more")
+        value = sr.speech_recognition()
+    sr.speak("ok")
+    return value  
+
+
+
+def check_activity(command):
+    global non_active
+    print(f"inside {non_active}")
+    if non_active > 5:
+        sr.speak("i didn't get any query for a long sir?")
+        non_active = 0
+    if command == "":
+        while command == "":
+            command = sr.speech_recognition()
+            non_active += 1
+            if non_active > 5:
+                sr.speak("i didn't get any query for a long sir?")
+                non_active = 0
+    return command
+    
 
 if __name__ == "__main__":
 
-    remainder = 5
-    count = 0
     while True:
-        count = 0
         if sr.wakeup():
             sr.speak("listening sir....")
             time.sleep(0.5)
             while True:
-                if count == remainder:
-                    sr.speak("you didn't said anything for a while sir")
-                    time.sleep(0.5)
-
                 command = sr.speech_recognition()
+                command = check_activity(command)
+                print(non_active)
                 if "deactivate" in command: # for deactivate service temporarly
+                    non_active = 0
                     print("Deactivate!")
                     sr.speak("Deactivating")
                     break
 
                 if "note" in command or "todo" in command: # for createing notes
+                    non_active = 0
+                    
+                    # for getting project or repository name
                     sr.speak("for which project sir ?")
                     project_name = sr.speech_recognition()
-                    while project_name == "":
-                        sr.speak("i didn't get it please tell me once more")
-                        project_name = sr.speech_recognition()
-                    sr.speak("ok")
-                    sr.speak("tell me the note sir?")                        
-                    
-                    note = sr.speech_recognition()
-                    while note == "":
-                        sr.speak("i didn't get it please tell me once more")
-                        note = sr.speech_recognition()
+                    project_name = nullcheck(value=project_name)
+                    project_name = recheck(type="project name",value=project_name)
 
+                     # for getting task or todo or note 
+                    sr.speak("tell me the note sir?")                        
+                    note = sr.speech_recognition()
+                    note = nullcheck(value=note)
                     note = recheck(type="note",value=note)
                     
-                    sr.speak("ok")   
+
                     sr.speak(" should i store?")
-                
                     command = sr.speech_recognition()
+                    command = nullcheck(command)
                     if "no" in command:
                         sr.speak("Ok sir")
                         continue
-
-                    time_now = datetime.now().astimezone().isoformat()
-                    
-
+                
                     time_now = datetime.now().astimezone().isoformat()
                     status = "Active"
-                    
-
                     res = notionClient.create_page(project_name=project_name,task=note,status=status,date=time_now)
+                    
                     if res.status_code == 200:
                         print("created successfully....!!!")
                         sr.speak("new note created")
@@ -97,29 +118,29 @@ if __name__ == "__main__":
 
 
                 if "create" in command and ( "repo" in command or "repository"):
+                    non_active = 0
                     sr.speak("you want to create new repository in github?")
                     if "yes" in sr.speech_recognition():
                         sr.speak("ok sir, creating new repository")
                         sr.speak("what is the repository name?")
                         
-                        while True:
-                            repo_name = sr.speech_recognition()
-                            sr.speak("your repository name is,   " + repo_name)
-                            sr.speak("is that right?")
-                            print(repo_name)
-                            if "yes" in sr.speech_recognition():
-                                break
-                            sr.speak("ok tell me once more....")
+                        repo_name = sr.speech_recognition()
+                        repo_name = nullcheck(value=repo_name)
+                        repo_name = recheck(type="repository name",value=repo_name)
+                    
 
-                        sr.speak("do you want to add any descriptions")
+                        sr.speak("do you want to add any descriptions?")
                         if "yes" in sr.speech_recognition():
                             sr.speak("ok then what should be the descriptions?")
+                            
                             desc = sr.speech_recognition()
-                            print(desc)
-                            sr.speak("so your description is   " + desc)
+                            desc = nullcheck(value=desc)
+                            desc = recheck(type="description",value=desc)
+                        
                         else:
                             sr.speak("ok")
                             desc = ""
+
                         sr.speak("should i create now?")
                         if "yes" in sr.speech_recognition():
                             repo_url = myGithub.create_repo_using_template(repo_name=repo_name,desc=desc)
@@ -145,3 +166,5 @@ if __name__ == "__main__":
                 if "exit" in command: # for exiting program
                     sr.speak("program terminating")
                     exit()
+
+                non_active += 1
