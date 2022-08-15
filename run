@@ -2,5 +2,9 @@
 
 export NOTION_INTEGRATION_TOKEN=<your_token>
 export NOTION_DATABASE_ID=<your_database_id>
+export GITHUB_AUTH_TOKEN=<github_auth_token>
+export GITHUB_TEMPLATE_OWNER_NAME=<template_owner_github_name>
+export GITHUB_TEMPLATE_REPO_NAME=<template_repository_name>
+export GITHUB_MY_NAME=<your_github_name>
 
 python3 main.py
