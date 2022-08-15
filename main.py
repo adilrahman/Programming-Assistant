@@ -27,6 +27,15 @@ template_data = { "template_owner" : github_template_owner_name,
 
 myGithub = MyGithub(token=github_token, my_info=my_info, template_datas=template_data,local_path=local_path) 
 
+def recheck(type,value):
+     while True:
+        sr.speak(f'your {type} is ' + value)
+        sr.speak(" is that right?")
+        if sr.speech_recognition() == "yes":
+            return value
+        sr.speak("ok tell me once more sir!")
+        value = sr.speech_recognition()
+
 if __name__ == "__main__":
 
     remainder = 5
@@ -48,31 +57,37 @@ if __name__ == "__main__":
                     break
 
                 if "note" in command or "todo" in command: # for createing notes
-                    sr.speak("Tell me sir")
+                    sr.speak("for which project sir ?")
+                    project_name = sr.speech_recognition()
+                    while project_name == "":
+                        sr.speak("i didn't get it please tell me once more")
+                        project_name = sr.speech_recognition()
+                    sr.speak("ok")
+                    sr.speak("tell me the note sir?")                        
+                    
                     note = sr.speech_recognition()
+                    while note == "":
+                        sr.speak("i didn't get it please tell me once more")
+                        note = sr.speech_recognition()
 
-                    if note == "":
-                        sr.speak("you didn't said anything")
+                    note = recheck(type="note",value=note)
+                    
+                    sr.speak("ok")   
+                    sr.speak(" should i store?")
+                
+                    command = sr.speech_recognition()
+                    if "no" in command:
+                        sr.speak("Ok sir")
                         continue
-                    else:
-                        sr.speak('your todo is ' + note)
-                        sr.speak(" should i store?")
 
-                        command = sr.speech_recognition()
-                        if "no" in command:
-                            sr.speak("Ok sir")
-                            continue
+                    time_now = datetime.now().astimezone().isoformat()
+                    
 
                     time_now = datetime.now().astimezone().isoformat()
                     status = "Active"
+                    
 
-                    ## test project attributes
-                    time_now = datetime.now().astimezone().isoformat()
-                    status = "Active"
-                    project_name = "Test1"
-                    task = "nothing"
-
-                    res = notionClient.create_page(project_name=project_name,task=task,status=status,date=time_now)
+                    res = notionClient.create_page(project_name=project_name,task=note,status=status,date=time_now)
                     if res.status_code == 200:
                         print("created successfully....!!!")
                         sr.speak("new note created")
