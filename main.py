@@ -85,20 +85,28 @@ if __name__ == "__main__":
                     if "yes" in sr.speech_recognition():
                         sr.speak("ok sir, creating new repository")
                         sr.speak("what is the repository name?")
-                        repo_name = sr.speech_recognition()
-                        sr.speak("your repository name is,   " + repo_name)
                         
+                        while True:
+                            repo_name = sr.speech_recognition()
+                            sr.speak("your repository name is,   " + repo_name)
+                            sr.speak("is that right?")
+                            print(repo_name)
+                            if "yes" in sr.speech_recognition():
+                                break
+
                         sr.speak("do you want to add any descriptions")
                         if "yes" in sr.speech_recognition():
                             sr.speak("ok then what should be the descriptions?")
                             desc = sr.speech_recognition()
+                            print(desc)
                             sr.speak("so your description is   " + desc)
                         else:
                             sr.speak("ok")
                             desc = ""
                         sr.speak("should i create now?")
                         if "yes" in sr.speech_recognition():
-                            MyGithub.create_repo_using_template(repo_name=repo_name,desc=desc)
+                            myGithub.create_repo_using_template(repo_name=repo_name,desc=desc)
+                            print("created")
                             sr.speak("new repository created")
                     else:
                         sr.speak("ok sir")
