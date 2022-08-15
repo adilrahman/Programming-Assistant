@@ -18,13 +18,14 @@ github_token = config.GITHUB_AUTH_TOKEN
 github_template_owner_name = config.GITHUB_TEMPLATE_OWNER_NAME
 github_template_repo_name = config.GITHUB_TEMPLATE_REPO_NAME
 github_my_name = config.GITHUB_MY_NAME
+local_path     = config.LOCAL_CLONING_PATH
 
 my_info = { "name" : github_my_name}
 
 template_data = { "template_owner" : github_template_owner_name,
                         "template_name" : github_template_repo_name }
 
-myGithub = MyGithub(token=github_token, my_info=my_info, template_datas=template_data) 
+myGithub = MyGithub(token=github_token, my_info=my_info, template_datas=template_data,local_path=local_path) 
 
 if __name__ == "__main__":
 
@@ -93,6 +94,7 @@ if __name__ == "__main__":
                             print(repo_name)
                             if "yes" in sr.speech_recognition():
                                 break
+                            sr.speak("ok tell me once more....")
 
                         sr.speak("do you want to add any descriptions")
                         if "yes" in sr.speech_recognition():
@@ -105,9 +107,19 @@ if __name__ == "__main__":
                             desc = ""
                         sr.speak("should i create now?")
                         if "yes" in sr.speech_recognition():
-                            myGithub.create_repo_using_template(repo_name=repo_name,desc=desc)
+                            repo_url = myGithub.create_repo_using_template(repo_name=repo_name,desc=desc)
+                            
+                            if repo_url == False:
+                                print("failed")
+                                sr.speak("can't create the repository due to some errors,  please check the configaration file")
+                                break
+
                             print("created")
                             sr.speak("new repository created")
+                            sr.speak("Do you want to create a local copy of this repository ?")
+                            if "yes" in sr.speech_recognition():
+                                sr.speak("cloning the repository...")
+                                myGithub.clone_repository(repo_url)
                     else:
                         sr.speak("ok sir")
 

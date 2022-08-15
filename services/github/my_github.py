@@ -2,6 +2,7 @@ import os
 import json
 from re import template
 import sys
+from urllib import response
 import requests
 
 class MyGithub:
@@ -39,7 +40,9 @@ class MyGithub:
             desc = repository description
         
         output:
-             true (created) / false (not created) 
+             created -> return "repository url"
+
+             not created -> return false
         '''
         
         # template details
@@ -64,19 +67,17 @@ class MyGithub:
         if res.status_code != 201:
             return False
 
-        # parsing to create local copy of the created repo
+        # parsing the repository clone link
         res = res.json()
-        print(res["html_url"])
-        
-        return True
+        repo_link = res["html_url"]
+
+        return repo_link
 
 
     def clone_repository(self, url : str) -> bool:
         '''
         inputs:
             url = "github repository url"
-
-           
         
         output:
             true (created) / false (not created) 
