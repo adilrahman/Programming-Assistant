@@ -3,10 +3,6 @@ import json
 from re import template
 import sys
 import requests
-# curl -X POST -H "Accept: application/vnd.github+json" 
-# -H "Authorization: token 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"
-#  https://api.github.com/repos/adilrahman/template-repo/generate 
-# -d '{"owner":"adilrahman","name":"newtest1","description":"This is your first repository","include_all_branches":false,"private":false}'
 
 class MyGithub:
     def __init__(self, token  : str,my_info : dict, template_datas : dict = None) -> None:
@@ -35,7 +31,8 @@ class MyGithub:
     def create_repo_using_template(self, repo_name, desc = "") -> str:
         '''
         input:
-            project_name -> repository name 
+            repo_name -> repository name
+
             desc -> repository description
         
         output:
@@ -91,7 +88,7 @@ if __name__ == "__main__":
     
     mygithub = MyGithub(token=token,my_info=myInfo,template_datas=template_data)
 
-    repo_name = "test case 4"
+    repo_name = "test case 5"
     desc = "nothing"
     res = mygithub.create_repo_using_template(repo_name=repo_name, desc=desc)
     print(res)
