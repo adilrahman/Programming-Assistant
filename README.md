@@ -1,6 +1,25 @@
-# Github-Assistant
-This is a virtual voice assistant to manage all github workflows 
+<h1 align="center">Project Name</h1>
 
+<p align="center">
+  <img src="https://vushii.com/images/placeholder.gif" width="750" height = "400" >  </a> 
+<br/></p>
+
+<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" /> <!-- line breaker -->
+
+<br>
+
+
+
+<!--- header ---->
+  
+ ## Project Scope 
+ 
+ ## Description
+  
+
+This is a virtual voice assistant to manage all github workflows 
+  
+ <!--- footer --->
 <br>
 <div align="center">
 <br>
