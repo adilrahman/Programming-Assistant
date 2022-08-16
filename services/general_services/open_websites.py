@@ -1,3 +1,5 @@
+from googlesearch import search
+import pyautogui
 import webbrowser as wb
 wb.register('chrome', None)
 
@@ -31,8 +33,30 @@ class WebsiteController:
         url = self.websites[name]
         wb.open(url=url)
 
+    @staticmethod
+    def open_top_results(query: str, nums_results: int = 5) -> None:
+        '''
+        description:
+            it will open `top` #nums_results `in web browser`
+
+        inputs:
+            query = your search query
+
+            nums_results = how many results you want
+
+        output:
+            open the results in web browser\n
+            return None
+        '''
+
+        solutions = search(query)
+        for idx, sol in enumerate(solutions):
+            if idx == nums_results:
+                break
+            wb.open(sol)
+
 
 if __name__ == "__main__":
-    web_contr = WebsiteControl()
+    web_contr = WebsiteController()
     web_contr.open_website("twitter")
     print("s")
