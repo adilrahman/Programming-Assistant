@@ -11,7 +11,7 @@ class SpeechTextEngine:
 
     def __init__(self) -> None:
 
-        ## Wake up commands
+        # Wake up commands
         self.ACTIVATION_COMMAND = [
             "hey friday", "hi friday", "are you there friday", "friday",
             "turn on", "are you there"
@@ -20,7 +20,7 @@ class SpeechTextEngine:
     def get_audio(self):
         with sr.Microphone() as src:
             print("Say...........")
-            audio = r.listen(src, phrase_time_limit=8)
+            audio = r.listen(src, phrase_time_limit=5)
             print("audio recognized")
 
         return audio

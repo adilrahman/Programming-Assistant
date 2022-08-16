@@ -1,2 +1,3 @@
-from .notion import notion
-from .github import my_github
+from .notion import *
+from .github import *
+from .general_services import *
