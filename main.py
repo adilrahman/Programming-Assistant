@@ -190,6 +190,27 @@ if __name__ == "__main__":
                     sr.speak("opening search prompt..")
                     WebsiteController.search_prompt()
 
+                if "clone this" in command:
+                    while True:
+                        sr.speak("ok")
+                        sr.speak("cloning the repository....")
+                        status = myGithub.clone_this_repository()
+                        if status == False:
+                            sr.speak("cloning failed")
+                            sr.speak("make sure the repository link")
+                            sr.speak("do you wanna try again!")
+                            command = yes_or_no(
+                                nullcheck(sr.speech_recognition()))
+                            if command == "yes":
+                                continue
+                            else:
+                                break
+                        else:
+                            break
+
+                if "firday" in command and non_active > 0:
+                    sr.speak("yes tell sir")
+
                 if "exit" in command:  # for exiting program
                     sr.speak("program terminating")
                     exit()
