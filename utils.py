@@ -28,9 +28,10 @@ def recheck(type: str, value: str):
         sr.speak(" is that right?")
         command = sr.speech_recognition()
         command = nullcheck(command)
+        command = yes_or_no(command)
         if command == "yes":
             return value
-        sr.speak("ok tell me once more sir!")
+        sr.speak(f"ok tell me the {type} once more sir!")
         value = sr.speech_recognition()
         value = nullcheck(value)
 
@@ -55,3 +56,18 @@ def nullcheck(value: str):
         value = sr.speech_recognition()
     sr.speak("ok")
     return value
+
+
+def yes_or_no(command: str):
+    yes = ["yes", "yea", "i want", "do it", "yeah", "yee", "ya", "yaa" "z", "yep", "yeap"
+           "thats right", "procced", "ok", "ahaa"]
+    no = ["nah", "no", "don't", "not", "na", "n"]
+
+    for word in command.split(" "):
+        if word in yes:
+            return "yes"
+
+        if word in "no":
+            return "no"
+
+    return "nan"

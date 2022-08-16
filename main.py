@@ -1,12 +1,12 @@
-from cgitb import text
+
 from speech_recognition_engine import SpeechTextEngine
 import config
 from services.notion import NotionClient
 from datetime import datetime
 import time
 from services.github import MyGithub
-from services.general_services import WebsiteController
-from utils import nullcheck, recheck
+from services.general_services import WebsiteController, ErrorSolutions
+from utils import nullcheck, recheck, yes_or_no
 
 notion_integration_token = config.NOTION_INTEGRATION_TOKEN
 notion_database_id = config.NOTION_DATABASE_ID
@@ -33,6 +33,8 @@ myGithub = MyGithub(token=github_token, my_info=my_info,
 
 websiteController = WebsiteController(
     visiting_website_list=visiting_website_list)
+
+errorSolutions = ErrorSolutions()
 
 non_active = 0
 
@@ -89,8 +91,9 @@ if __name__ == "__main__":
 
                     sr.speak(" should i store?")
                     command = sr.speech_recognition()
-                    command = nullcheck(command)
-                    if "no" in command:
+                    command = yes_or_no(nullcheck(sr.speech_recognition()))
+
+                    if "no" == command:
                         sr.speak("Ok sir")
                         continue
 
@@ -105,6 +108,13 @@ if __name__ == "__main__":
                     else:
                         print(f"error :-> status code = {res.status_code}")
                         sr.speak("can't store the note")
+
+                # finding solutions for error
+                if ("find" in command or "solution" in command or "solutions" in command) and ("error" in command):
+                    sr.speak("ok")
+                    sr.speak("Enter the error message in the prompt")
+                    errorSolutions.find()
+                    sr.speak("finding solutions....")
 
                 # opening websites
                 if "open" in command:
@@ -126,7 +136,8 @@ if __name__ == "__main__":
                 if "create" in command and ("repo" in command or "repository"):
                     non_active = 0
                     sr.speak("you want to create new repository in github?")
-                    if "yes" in sr.speech_recognition():
+                    command = yes_or_no(nullcheck(sr.speech_recognition()))
+                    if "yes" == command:
                         sr.speak("ok sir, creating new repository")
                         sr.speak("what is the repository name?")
 
@@ -136,7 +147,8 @@ if __name__ == "__main__":
                             type="repository name", value=repo_name)
 
                         sr.speak("do you want to add any descriptions?")
-                        if "yes" in sr.speech_recognition():
+                        command = yes_or_no(nullcheck(sr.speech_recognition()))
+                        if "yes" == command:
                             sr.speak(
                                 "ok then what should be the descriptions?")
 
@@ -149,7 +161,8 @@ if __name__ == "__main__":
                             desc = ""
 
                         sr.speak("should i create now?")
-                        if "yes" in sr.speech_recognition():
+                        command = yes_or_no(nullcheck(sr.speech_recognition()))
+                        if "yes" == command:
                             repo_url = myGithub.create_repo_using_template(
                                 repo_name=repo_name, desc=desc)
 
@@ -163,11 +176,19 @@ if __name__ == "__main__":
                             sr.speak("new repository created")
                             sr.speak(
                                 "Do you want to create a local copy of this repository ?")
-                            if "yes" in sr.speech_recognition():
+
+                            command = yes_or_no(
+                                nullcheck(sr.speech_recognition()))
+
+                            if "yes" == command:
                                 sr.speak("cloning the repository...")
                                 myGithub.clone_repository(repo_url)
                     else:
                         sr.speak("ok sir")
+
+                if "prompt" in command or "prom" in command:
+                    sr.speak("opening search prompt..")
+                    WebsiteController.search_prompt()
 
                 if "exit" in command:  # for exiting program
                     sr.speak("program terminating")
