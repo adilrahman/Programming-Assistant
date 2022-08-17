@@ -1,4 +1,4 @@
-<h1 align="center">Project Name</h1>
+<h1 align="center">Programming Assistant</h1>
 
 <p align="center">
   <img src="https://vushii.com/images/placeholder.gif" width="750" height = "400" >  </a> 
