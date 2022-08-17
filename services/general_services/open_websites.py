@@ -70,7 +70,7 @@ class WebsiteController:
         '''
         query = pyautogui.prompt(title="Enter the query?")
 
-        if len(query) == 0:
+        if query == None or len(query) == 0:
             return False
 
         nums_results = pyautogui.prompt(

@@ -7,5 +7,6 @@ VISITING_WEBSITE_LIST = {
     "twitter": "www.twitter.com",
     "stackoverflow": "www.stackoverflow.com",
     "wiki": "www.wikipedia.org",
-    "wikipedia": "www.wikipedia.org"
+    "wikipedia": "www.wikipedia.org",
+    "instagram": "https://www.instagram.com/"
 }

@@ -1,4 +1,3 @@
-
 from speech_recognition_engine import SpeechTextEngine
 import config
 from services.notion import NotionClient
@@ -186,7 +185,7 @@ if __name__ == "__main__":
                     else:
                         sr.speak("ok sir")
 
-                if "prompt" in command or "prom" in command:
+                if "prompt" in command or "prom" in command or "search box" in command:
                     sr.speak("opening search prompt..")
                     WebsiteController.search_prompt()
 
@@ -208,8 +207,9 @@ if __name__ == "__main__":
                         else:
                             break
 
-                if "firday" in command and non_active > 0:
-                    sr.speak("yes tell sir")
+                if "friday" in command and non_active > 0:
+                    non_active = 0
+                    sr.speak("yes tell me sir")
 
                 if "exit" in command:  # for exiting program
                     sr.speak("program terminating")
