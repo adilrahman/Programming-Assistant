@@ -1,28 +1,64 @@
 <h1 align="center">Programming Assistant</h1>
 
 <p align="center">
-  <img src="https://vushii.com/images/placeholder.gif" width="750" height = "400" >  </a> 
+  <img src="./Images/logo.png" width="750" height = "400" >  </a> 
 <br/></p>
 
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" /> <!-- line breaker -->
 
-<br>
 
 
 
 <!--- header ---->
-  
- ## Project Scope 
- 
- ## Description
-  
 
-This is a virtual voice assistant to manage all github workflows 
+<h3 align="center" style="color:blue;"> 
+<i>DESCRIPTION</i>
+</h3>
+
+<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" /> <!-- line breaker -->
   
+ ## Objective  
+ - simplify all programming-related tasks using voice commands 
+ - automate all manual repeated tiresome programming-related tasks
+ 
+ ## Features 
+ 
+ 
+ 1. create new ![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=flat&logo=github&logoColor=white) repository by voice command
+ 2. clone the created repository into the local machine by voice comman
+ 3. clone others repositories by voice command
+ 4. take notes or ToDo's in ![Notion](https://img.shields.io/badge/Notion-%23000000.svg?style=flat&logo=notion&logoColor=white) by voice command 
+ 5. take screenshots by voice command
+ 6. help with finding solutions to errors by voice command
+ 7. open websites ( often visiting sites ) by voice command
+ 8. easing Websearch by voice command
+ 9. .......... 🔜
+ 
+
+
+## Supported OS 
+* ### Linux ![Linux](https://img.shields.io/badge/Linux-FCC624?style=flat&logo=linux&logoColor=black)
+
+## Tested OS
+* ### Ubuntu 22.04.1 LTS ![Ubuntu](https://img.shields.io/badge/Ubuntu-E95420?style=flat&logo=ubuntu&logoColor=white)
+
+## 
+
+
+<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" /> <!-- line breaker -->
+
+<h3 align="center" style="color:blue;"> 
+<i>HOW TO USE</i>
+</h3>
+<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" /> <!-- line breaker -->
+
+## Steps
+ 1. .......... 🔜
+
+
  <!--- footer --->
 <br>
 <div align="center">
-<br>
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" /> <!-- line breaker -->
 
 <p>
