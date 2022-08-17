@@ -115,6 +115,7 @@ class MyGithub:
 
         time.sleep(0.2)
         repo_url = pyperclip.paste()  # it past from clipboard
+        print(repo_url)
 
         if re.search(pattern=".git", string=repo_url) != None:
             self.clone_repository(url=repo_url)

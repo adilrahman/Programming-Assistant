@@ -4,7 +4,7 @@ from services.notion import NotionClient
 from datetime import datetime
 import time
 from services.github import MyGithub
-from services.general_services import WebsiteController, ErrorSolutions
+from services.general_services import WebsiteController, ErrorSolutions, TakeScreenShot
 from utils import nullcheck, recheck, yes_or_no
 
 notion_integration_token = config.NOTION_INTEGRATION_TOKEN
@@ -20,6 +20,7 @@ github_template_repo_name = config.GITHUB_TEMPLATE_REPO_NAME
 github_my_name = config.GITHUB_MY_NAME
 local_path = config.LOCAL_CLONING_PATH
 visiting_website_list = config.VISITING_WEBSITE_LIST
+screenshot_locations = config.SCREENSHOTS_PATH
 
 
 my_info = {"name": github_my_name}
@@ -34,6 +35,8 @@ websiteController = WebsiteController(
     visiting_website_list=visiting_website_list)
 
 errorSolutions = ErrorSolutions()
+
+screenshot = TakeScreenShot(path=screenshot_locations)
 
 non_active = 0
 
@@ -206,6 +209,22 @@ if __name__ == "__main__":
                                 break
                         else:
                             break
+
+                if ("take" in command) and ("screenshot" in command):
+                    img_loc = screenshot.capture()
+
+                    if img_loc == False:
+                        sr.speak("i couldn't take the image sir")
+                        continue
+
+                    sr.speak("screenshot taken")
+                    sr.speak("you wanna see the image?")
+                    command = sr.speech_recognition()
+                    command = nullcheck(command)
+                    if yes_or_no(command=command) == "yes":
+                        screenshot.open_image(img_loc=img_loc)
+                    else:
+                        sr.speak("ok")
 
                 if "friday" in command and non_active > 0:
                     non_active = 0
