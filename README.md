@@ -52,9 +52,12 @@
 </h3>
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" /> <!-- line breaker -->
 
-## Steps
- 1. .......... 🔜
 
+
+
+<p align="center" width="100%">
+<img src="https://drive.google.com/uc?export=view&id=1DDsnRQRgrWUfO4je9IUJ1LdCQQJ36_3R" />
+</p>
 
  <!--- footer --->
 <br>
