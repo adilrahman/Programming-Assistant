@@ -7,4 +7,4 @@ export GITHUB_TEMPLATE_OWNER_NAME=<template_owner_github_name>
 export GITHUB_TEMPLATE_REPO_NAME=<template_repository_name>
 export GITHUB_MY_NAME=<your_github_name>
 
-python3 main.py
+# python3 main.py
