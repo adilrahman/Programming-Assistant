@@ -20,7 +20,7 @@ class SpeechTextEngine:
     def get_audio(self):
         with sr.Microphone() as src:
             print("Say...........")
-            audio = r.listen(src, phrase_time_limit=5)
+            audio = r.listen(src, phrase_time_limit=3)
             print("audio recognized")
 
         return audio
