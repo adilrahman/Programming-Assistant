@@ -1,32 +1,17 @@
 {
     "intents": [
         {
-            "tag": "wakeup",
-            "patterns": [
-                "hi friday",
-                "hello friday",
-                "friday",
-                "wakeup friday",
-                "activate frinday",
-                "frinday are you there"
-            ],
-            "response": [
-                "yes tell me sir",
-                "listening sir",
-                "im here"
-            ]
-        },
-        {
             "tag": "deactivate",
             "patterns": [
-                "friday deactivate",
                 "deactivate",
-                "frinday go to sleep mode",
-                "go to sleep mode frinday",
-                "frinday go to offline",
-                "frinday shutup",
+                "deactivate",
+                "sleep mode",
+                "sleep mode ",
+                "offline",
+                "take a nap",
+                "shutup",
                 "turn off",
-                "turn off friday",
+                "turn off",
                 "turn yourself off"
             ],
             "response": [
@@ -38,11 +23,11 @@
         {
             "tag": "take note",
             "patterns": [
-                "frinday take a note",
-                "frinday mark this note",
-                "frinday mark this todo",
-                "frinday store this note",
-                "frinday store this todo"
+                "stake a note",
+                "mark this note",
+                "mark this todo",
+                "store this note",
+                "store this todo"
             ],
             "response": [
                 "ok sir"
@@ -51,8 +36,11 @@
         {
             "tag": "find solutions",
             "patterns": [
-                "friday find solution for this error",
-                "help me with this error"
+                "find solution for this error",
+                "help me with this error",
+                "help me to find this error",
+                "find solutions for this error",
+                "give me the solutions for this error"
             ],
             "response": [
                 "sure sir",
@@ -63,9 +51,16 @@
             "tag": "open websites",
             "patterns": [
                 "open instagram",
-                "frinday open twitter",
-                "friday visit",
-                "friday goto"
+                "open twitter",
+                "open github",
+                "open google",
+                "open facebook",
+                "visit google",
+                "visit instagram",
+                "visit twitter",
+                "visit github",
+                "visit google",
+                "goto instagram"
             ],
             "response": [
                 "ok sir"
@@ -74,12 +69,12 @@
         {
             "tag": "create repository",
             "patterns": [
-                "friday make a new repo",
-                "friday make a new repository in github",
-                "friday make a new project in github",
-                "friday create a new repo",
-                "friday create a new repository in github",
-                "friday create a new project in github"
+                "make a new repo",
+                "make a new repository in github",
+                "make a new project in github",
+                "create a new repo",
+                "create a new repository in github",
+                "create a new project in github"
             ],
             "response": [
                 "hmm",
@@ -89,12 +84,12 @@
         {
             "tag": "web search prompt",
             "patterns": [
-                "open search box friday",
-                "give me the search box friday",
-                "open the prompt friday",
+                "open search box",
+                "give me the search box",
+                "open the prompt",
                 "open a search prompt",
                 "open a search box",
-                "give me the search box friday"
+                "give me the search box"
             ],
             "response": [
                 "opening search prompt.."
@@ -103,12 +98,12 @@
         {
             "tag": "clone repository",
             "patterns": [
-                "clone this repo friday",
-                "clone this project friday",
+                "clone this repo",
+                "clone this project",
                 "download this repo",
-                "download this project friday",
-                "clone this repository friday",
-                "download this repository friday"
+                "download this project",
+                "clone this repository",
+                "download this repository"
             ],
             "response": [
                 "ok cloning the repository",
@@ -118,9 +113,9 @@
         {
             "tag": "take screenshot",
             "patterns": [
-                "take a screenshot friday",
-                "capture the screenshot friday",
-                "screenshot this friday",
+                "take a screenshot",
+                "capture the screenshot",
+                "screenshot this",
                 "take this picture",
                 "capture this picture",
                 "save this picture"
@@ -132,18 +127,18 @@
         {
             "tag": "exit",
             "patterns": [
-                "exit friday",
+                "exit",
                 "close yourself",
-                "close friday",
+                "close",
                 "terminate yourself",
-                "terminate friday"
+                "terminate",
+                "shutdown please",
+                "shutdown yourself"
             ],
             "response": [
                 "program terminating",
                 "exiting program",
-                "closing",
-                "shutdown friday",
-                "shutdown"
+                "closing"
             ]
         }
     ]

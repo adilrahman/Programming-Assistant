@@ -6,6 +6,8 @@ import time
 from services.github import MyGithub
 from services.general_services import WebsiteController, ErrorSolutions, TakeScreenShot
 from utils import nullcheck, recheck, yes_or_no
+from nlp.intent_classification.naive_bayes import NaiveByasModel
+from nlp.intent_classification.feed_forward_neural_network import NerualNetworkModel
 
 notion_integration_token = config.NOTION_INTEGRATION_TOKEN
 notion_database_id = config.NOTION_DATABASE_ID
