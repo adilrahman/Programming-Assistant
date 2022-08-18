@@ -1,4 +1,5 @@
 import json
+import os
 import random
 from speech_recognition_engine import SpeechTextEngine
 import config
@@ -59,7 +60,6 @@ for intent in intents["intents"]:
 
 def check_activity(command):
     global non_active
-    print(f"inside {non_active}")
     if non_active > 10:
         sr.speak("i didn't get any query for a long sir?")
         non_active = 0
@@ -104,8 +104,7 @@ if __name__ == "__main__":
                 intent = intent_classifier.find_intent(command=command)
                 random_response(intent=intent)
 
-                print(non_active)
-                print(intent)
+                print("intent -> " + intent)
                 if intent == "deactivate":  # for deactivate service temporarly
                     non_active = 0
                     print("Deactivate!")
@@ -259,11 +258,14 @@ if __name__ == "__main__":
                     else:
                         sr.speak("ok")
 
-                if "friday" in command and non_active > 0:
-                    non_active = 0
-                    sr.speak("yes tell me sir")
+                if intent == "spotify":
+                    os.system("spotify &")
 
                 if intent == "exit":  # for exiting program
                     exit()
+
+                if "friday" in command and non_active > 0:
+                    non_active = 0
+                    sr.speak("yes tell me sir")
 
                 non_active += 1

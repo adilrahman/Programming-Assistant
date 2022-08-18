@@ -60,7 +60,7 @@ def nullcheck(value: str):
 
 def yes_or_no(command: str):
     yes = ["yes", "yea", "i want", "do it", "yeah", "yee", "ya", "yaa" "z", "yep", "yeap"
-           "that's right", "proceed", "ok", "ahaa", "go on", "i want"]
+           "that's right", "proceed", "ok", "ahaa", "go on", "i want", "yeh", "doit", "create"]
     no = ["nah", "no", "don't", "not", "na", "n", "don't", "never"]
 
     for word in no:

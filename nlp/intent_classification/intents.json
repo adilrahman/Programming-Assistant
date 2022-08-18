@@ -86,7 +86,7 @@
             "response": [
                 "hmm",
                 "ok",
-                "ok sir, creating new repository"
+                "ok sir"
             ]
         },
         {
@@ -148,6 +148,24 @@
                 "program terminating",
                 "exiting program",
                 "closing"
+            ]
+        },
+        {
+            "tag": "spotify",
+            "patterns": [
+                "open spotify",
+                "open spotify",
+                "open spotify",
+                "play music",
+                "play a song",
+                "play me some song",
+                "play some song",
+                "i want hear song",
+                "i want to hear music"
+            ],
+            "response": [
+                "ok sir",
+                "opening spotify"
             ]
         }
     ]
