@@ -9,7 +9,7 @@
                 "sleep mode ",
                 "offline",
                 "take a nap",
-                "shutup",
+                "shut up",
                 "turn off",
                 "turn off",
                 "turn yourself off"
@@ -35,7 +35,7 @@
                 "make a todo"
             ],
             "response": [
-                "ok sir"
+                "ok"
             ]
         },
         {
@@ -79,11 +79,14 @@
                 "make a new project in github",
                 "create a new repo",
                 "create a new repository in github",
-                "create a new project in github"
+                "create a new project in github",
+                "i want to make a new project",
+                "can you make a project for me please"
             ],
             "response": [
                 "hmm",
-                "ok"
+                "ok",
+                "ok sir, creating new repository"
             ]
         },
         {
@@ -126,7 +129,8 @@
                 "save this picture"
             ],
             "response": [
-                "ok sir"
+                "ok sir",
+                "ok"
             ]
         },
         {

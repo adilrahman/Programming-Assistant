@@ -1,3 +1,5 @@
+import json
+import random
 from speech_recognition_engine import SpeechTextEngine
 import config
 from services.notion import NotionClient
@@ -7,7 +9,7 @@ from services.github import MyGithub
 from services.general_services import WebsiteController, ErrorSolutions, TakeScreenShot
 from utils import nullcheck, recheck, yes_or_no
 from nlp.intent_classification.naive_bayes import NaiveByasModel
-from nlp.intent_classification.feed_forward_neural_network import NerualNetworkModel, intent_classifier
+
 
 notion_integration_token = config.NOTION_INTEGRATION_TOKEN
 notion_database_id = config.NOTION_DATABASE_ID
@@ -44,11 +46,21 @@ non_active = 0
 
 intent_classifier = NaiveByasModel()
 
+# loading intent json for making random responses
+intent_json_file_loc = "nlp/intent_classification/intents.json"
+with open(intent_json_file_loc, "r") as file:
+    intents = json.load(file)
+
+intents_response = {}
+
+for intent in intents["intents"]:
+    intents_response[intent["tag"]] = intent["response"]
+
 
 def check_activity(command):
     global non_active
     print(f"inside {non_active}")
-    if non_active > 5:
+    if non_active > 10:
         sr.speak("i didn't get any query for a long sir?")
         non_active = 0
     if command == "":
@@ -61,23 +73,42 @@ def check_activity(command):
     return command
 
 
+def random_response(intent: str) -> None:
+    '''
+    description:
+        it choose responses from intent file randomly
+        for specific intents
+
+    Inputs:
+        intent = "the intent"
+    Ouputs:
+        speak response
+    '''
+    if intent == "not a command":
+        return
+
+    res = intents_response[intent]
+    res = random.choice(res)
+    sr.speak(res)
+
+
 if __name__ == "__main__":
 
     while True:
-        if sr.wakeup():
+        if sr.wakeup():  # repeat until hear wake up command
             sr.speak("listening sir....")
             time.sleep(0.5)
-            while True:
+            while True:  # commanding mode on
                 command = sr.speech_recognition()
                 command = check_activity(command)
                 intent = intent_classifier.find_intent(command=command)
+                random_response(intent=intent)
 
                 print(non_active)
                 print(intent)
                 if intent == "deactivate":  # for deactivate service temporarly
                     non_active = 0
                     print("Deactivate!")
-                    sr.speak("Deactivating")
                     break
 
                 if intent == "take note":  # for createing notes
@@ -118,7 +149,7 @@ if __name__ == "__main__":
 
                 # finding solutions for error
                 if intent == "find solutions":
-                    sr.speak("ok")
+
                     sr.speak("Enter the error message in the prompt")
                     errorSolutions.find()
                     sr.speak("finding solutions....")
@@ -145,7 +176,7 @@ if __name__ == "__main__":
                     sr.speak("you want to create new repository in github?")
                     command = yes_or_no(nullcheck(sr.speech_recognition()))
                     if "yes" == command:
-                        sr.speak("ok sir, creating new repository")
+
                         sr.speak("what is the repository name?")
 
                         repo_name = sr.speech_recognition()
@@ -194,13 +225,10 @@ if __name__ == "__main__":
                         sr.speak("ok sir")
 
                 if intent == "web search prompt":
-                    sr.speak("opening search prompt..")
                     WebsiteController.search_prompt()
 
                 if intent == "clone repository":
                     while True:
-                        sr.speak("ok")
-                        sr.speak("cloning the repository....")
                         status = myGithub.clone_this_repository()
                         if status == False:
                             sr.speak("cloning failed")
@@ -236,7 +264,6 @@ if __name__ == "__main__":
                     sr.speak("yes tell me sir")
 
                 if intent == "exit":  # for exiting program
-                    sr.speak("program terminating")
                     exit()
 
                 non_active += 1

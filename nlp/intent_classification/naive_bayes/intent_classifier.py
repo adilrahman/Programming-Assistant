@@ -123,7 +123,7 @@ class TrainModel:
         Ouputs:
             return ( x_train, y_train )
         '''
-        with open("intents.json", "r") as f:
+        with open(self.intents, "r") as f:
             intents = json.load(f)
 
         vocab = []
@@ -191,7 +191,7 @@ class TrainModel:
 
 
 if __name__ == "__main__":
-    intents_json_file = ""
+    intents_json_file = "nlp/intent_classification/intents.json"
     trainmodel = TrainModel(intents_json_file=intents_json_file)
     trainmodel.train()
 
