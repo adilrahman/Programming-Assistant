@@ -32,7 +32,8 @@
  6. help with finding solutions to errors by voice command
  7. open websites ( often visiting sites ) by voice command
  8. easing Websearch by voice command
- 9. .......... 🔜
+ 9. play music
+ 10. .......... 🔜
  
 
 
