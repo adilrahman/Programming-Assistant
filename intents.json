@@ -27,7 +27,12 @@
                 "mark this note",
                 "mark this todo",
                 "store this note",
-                "store this todo"
+                "store this todo",
+                "make a note",
+                "create a note",
+                "take this note",
+                "make a note for me",
+                "make a todo"
             ],
             "response": [
                 "ok sir"

@@ -7,7 +7,7 @@ from services.github import MyGithub
 from services.general_services import WebsiteController, ErrorSolutions, TakeScreenShot
 from utils import nullcheck, recheck, yes_or_no
 from nlp.intent_classification.naive_bayes import NaiveByasModel
-from nlp.intent_classification.feed_forward_neural_network import NerualNetworkModel
+from nlp.intent_classification.feed_forward_neural_network import NerualNetworkModel, intent_classifier
 
 notion_integration_token = config.NOTION_INTEGRATION_TOKEN
 notion_database_id = config.NOTION_DATABASE_ID
@@ -42,6 +42,8 @@ screenshot = TakeScreenShot(path=screenshot_locations)
 
 non_active = 0
 
+intent_classifier = NaiveByasModel()
+
 
 def check_activity(command):
     global non_active
@@ -68,16 +70,17 @@ if __name__ == "__main__":
             while True:
                 command = sr.speech_recognition()
                 command = check_activity(command)
-                if "do you" in command:
-                    sr.speak("No I don't want")
+                intent = intent_classifier.find_intent(command=command)
+
                 print(non_active)
-                if "deactivate" in command:  # for deactivate service temporarly
+                print(intent)
+                if intent == "deactivate":  # for deactivate service temporarly
                     non_active = 0
                     print("Deactivate!")
                     sr.speak("Deactivating")
                     break
 
-                if "note" in command or "todo" in command:  # for createing notes
+                if intent == "take note":  # for createing notes
                     non_active = 0
 
                     # for getting project or repository name
@@ -114,14 +117,14 @@ if __name__ == "__main__":
                         sr.speak("can't store the note")
 
                 # finding solutions for error
-                if ("find" in command or "solution" in command or "solutions" in command) and ("error" in command):
+                if intent == "find solutions":
                     sr.speak("ok")
                     sr.speak("Enter the error message in the prompt")
                     errorSolutions.find()
                     sr.speak("finding solutions....")
 
                 # opening websites
-                if "open" in command:
+                if intent == "open websites":
                     non_active = 0
                     name = command.split("open ")
 
@@ -137,7 +140,7 @@ if __name__ == "__main__":
                     sr.speak("opening " + name)
                     websiteController.open_website(name=name)
 
-                if "create" in command and ("repo" in command or "repository"):
+                if intent == "create repository":
                     non_active = 0
                     sr.speak("you want to create new repository in github?")
                     command = yes_or_no(nullcheck(sr.speech_recognition()))
@@ -190,11 +193,11 @@ if __name__ == "__main__":
                     else:
                         sr.speak("ok sir")
 
-                if "prompt" in command or "prom" in command or "search box" in command:
+                if intent == "web search prompt":
                     sr.speak("opening search prompt..")
                     WebsiteController.search_prompt()
 
-                if "clone this" in command:
+                if intent == "clone repository":
                     while True:
                         sr.speak("ok")
                         sr.speak("cloning the repository....")
@@ -212,7 +215,7 @@ if __name__ == "__main__":
                         else:
                             break
 
-                if ("take" in command) and ("screenshot" in command):
+                if intent == "take screenshot":
                     img_loc = screenshot.capture()
 
                     if img_loc == False:
@@ -232,7 +235,7 @@ if __name__ == "__main__":
                     non_active = 0
                     sr.speak("yes tell me sir")
 
-                if "exit" in command:  # for exiting program
+                if intent == "exit":  # for exiting program
                     sr.speak("program terminating")
                     exit()
 
