@@ -1,7 +1,142 @@
 {
     "intents": [
         {
-            "tag": "greeting"
+            "tag": "wakeup",
+            "patterns": [
+                "hi friday",
+                "hello friday",
+                "friday",
+                "wakeup friday",
+                "activate frinday",
+                "frinday are you there"
+            ],
+            "response": [
+                "yes tell me sir",
+                "listening sir",
+                "im here"
+            ]
+        },
+        {
+            "tag": "deactivate",
+            "patterns": [
+                "friday deactivate",
+                "deactivate",
+                "frinday go to sleep mode",
+                "go to sleep mode frinday",
+                "frinday go to offline",
+                "frinday shutup"
+            ],
+            "response": [
+                "ok sir",
+                "command mode off",
+                "deactivating"
+            ]
+        },
+        {
+            "tag": "take note",
+            "patterns": [
+                "frinday take a note",
+                "frinday mark this note",
+                "frinday mark this todo",
+                "frinday store this note",
+                "frinday store this todo"
+            ],
+            "response": [
+                "ok sir"
+            ]
+        },
+        {
+            "tag": "find solutions",
+            "patterns": [
+                "friday find solution for this error",
+                "help me with this error"
+            ],
+            "response": [
+                "sure sir",
+                "ok sir"
+            ]
+        },
+        {
+            "tag": "open websites",
+            "patterns": [
+                "open instagram",
+                "frinday open twitter",
+                "friday visit",
+                "friday goto"
+            ],
+            "response": [
+                "ok sir"
+            ]
+        },
+        {
+            "tag": "create repository",
+            "patterns": [
+                "friday make a new repo",
+                "friday make a new repository in github",
+                "friday make a new project in github",
+                "friday create a new repo",
+                "friday create a new repository in github",
+                "friday create a new project in github"
+            ],
+            "response": [
+                "hmm",
+                "ok"
+            ]
+        },
+        {
+            "tag": "web search prompt",
+            "patterns": [
+                "open search box friday",
+                "give me the search box friday",
+                "open the prompt friday",
+                "open a search prompt",
+                "open a search box",
+                "give me the search box friday"
+            ],
+            "response": [
+                "opening search prompt.."
+            ]
+        },
+        {
+            "tag": "clone repository",
+            "patterns": [
+                "clone this repo friday",
+                "clone this project friday",
+                "download this repo friday",
+                "download this project friday",
+                "clone this repository friday",
+                "download this repository friday"
+            ],
+            "response": [
+                "ok cloning the repository",
+                "ok downloading the repository"
+            ]
+        },
+        {
+            "tag": "take screenshot",
+            "patterns": [
+                "take a screenshot friday",
+                "capture the screenshot friday",
+                "screenshot this friday"
+            ],
+            "response": [
+                "ok sir"
+            ]
+        },
+        {
+            "tag": "exit",
+            "patterns": [
+                "exit friday",
+                "close yourself",
+                "close friday",
+                "terminate yourself",
+                "terminate friday"
+            ],
+            "response": [
+                "program terminating",
+                "exiting program",
+                "closing"
+            ]
         }
     ]
 }
