@@ -14,9 +14,14 @@ class WebsiteController:
         outputs: None
         '''
         self.websites = visiting_website_list
+        self.google_search = "www.google.com/search?gx&q="
 
     def open_website(self, name: str) -> None:
         '''
+        description:
+            it open the website in webbrowser;
+            if the given name is in the visiting_website_list the it go to that url
+            `otherwise` it do a google search and go to the top result 
         inputs:
             name = website_name
 
@@ -28,7 +33,8 @@ class WebsiteController:
                 return False
         '''
         if name not in self.websites:
-            return False
+            self.open_top_results(query=name, nums_results=1)
+            return
 
         url = self.websites[name]
         wb.open(url=url)
@@ -92,7 +98,9 @@ class WebsiteController:
 
 
 if __name__ == "__main__":
-    # web_contr = WebsiteController()
-    # web_contr.open_website("twitter")
-    # print("s")
-    WebsiteController.search_prompt()
+    visiting_website_list = {"twitter": "www.twitter.com"}
+    web_contr = WebsiteController(visiting_website_list=visiting_website_list)
+    while True:
+        x = input("website : ")
+        web_contr.open_website(name=x)
+    # WebsiteController.search_prompt()
