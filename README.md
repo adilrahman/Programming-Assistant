@@ -21,19 +21,21 @@
  - simplify all programming-related tasks using voice commands 
  - automate all manual repeated tiresome programming-related tasks
  
- ## Features 
+ ## Features 💡
  
  
- 1. create new ![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=flat&logo=github&logoColor=white) repository by voice command
- 2. clone the created repository into the local machine by voice comman
- 3. clone others repositories by voice command
- 4. take notes or ToDo's in ![Notion](https://img.shields.io/badge/Notion-%23000000.svg?style=flat&logo=notion&logoColor=white) by voice command 
- 5. take screenshots by voice command
- 6. help with finding solutions to errors by voice command
- 7. open websites ( often visiting sites ) by voice command
- 8. easing Websearch by voice command
- 9. play music
+ 1. create new ![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=flat&logo=github&logoColor=white) repository by voice command ✅
+ 2. clone the created repository into the local machine by voice command ✅
+ 3. clone others repositories by voice command ✅
+ 4. take notes or ToDo's in ![Notion](https://img.shields.io/badge/Notion-%23000000.svg?style=flat&logo=notion&logoColor=white) by voice command ✅
+ 5. take screenshots by voice command ✅
+ 6. help with finding solutions to errors by voice command ✅
+ 7. open websites ( often visiting sites ) by voice command ✅
+ 8. easing Websearch by voice command ✅
+ 9. play music ✅
  10. .......... 🔜
+ 
+
  
 
 
