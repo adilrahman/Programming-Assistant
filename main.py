@@ -15,7 +15,7 @@ from nlp.intent_classification.naive_bayes import NaiveByasModel
 from services.window_control import ScreenControl
 import pyautogui
 from speech_text_client import speechTextClient
-
+from services.general_services.wikipedia_services import WikipediaController
 
 notion_integration_token = config.NOTION_INTEGRATION_TOKEN
 notion_database_id = config.NOTION_DATABASE_ID
@@ -61,6 +61,8 @@ intent_classifier = NaiveByasModel()
 
 screenControl = ScreenControl(
     speech_rec=sr.get_audio, speech_to_text=sr.audio_to_text)
+
+wikipediaController = WikipediaController()
 
 
 # loading intent json for making random responses
@@ -312,6 +314,36 @@ if __name__ == "__main__":
                         text=text)
                     sr.speak(translated_text, lang="ml")
                     pyautogui.alert(text=translated_text)
+
+                if intent == "wikipeadia":
+
+                    patterns = [
+                        "what is ",
+                        "tell me about ",
+                        "who is "]
+
+                    find_pattern = False
+
+                    for pattern in patterns:
+                        if re.search(pattern=pattern, string=command) != None:
+                            find_pattern = True
+                            break
+
+                    if find_pattern:
+                        text = command.split(pattern)[-1]
+
+                    else:
+                        sr.speak("ok tell me the topic")
+                        text = sr.speech_recognition()
+                        text = nullcheck(text)
+
+                    summery = wikipediaController.get_summery(topic=text)
+                    if summery == False:
+                        sr.speak("sorry i didn't get any results")
+                        continue
+
+                    sr.speak(summery)
+                    pyautogui.alert(summery)
 
                 if intent == "exit":  # for exiting program
                     exit()

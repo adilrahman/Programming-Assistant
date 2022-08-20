@@ -78,6 +78,24 @@
             ]
         },
         {
+            "tag": "wikipeadia",
+            "patterns": [
+                "what is google",
+                "what is google",
+                "tell me about youtube",
+                "tell me about youtube",
+                "what is",
+                "what is",
+                "tell me about",
+                "who is",
+                "who is"
+            ],
+            "response": [
+                "ok, wait sir",
+                "ok, let me check"
+            ]
+        },
+        {
             "tag": "create repository",
             "patterns": [
                 "make a new repo",
