@@ -99,7 +99,8 @@
                 "open the prompt",
                 "open a search prompt",
                 "open a search box",
-                "give me the search box"
+                "give me the search box",
+                "i want to search"
             ],
             "response": [
                 "opening search prompt.."

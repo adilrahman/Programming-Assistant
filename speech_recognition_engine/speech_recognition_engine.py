@@ -1,33 +1,40 @@
+import sys
 import speech_recognition as sr
 import gtts
 from playsound import playsound
 import os
 import time
-from services.general_services import LanguageTranslate
-
-r = sr.Recognizer()
-
-languageTranslate = LanguageTranslate(lang_from="ml", lang_to="en")
-languageTranslate_1 = LanguageTranslate(lang_from="en", lang_to="ml")
 
 
 class SpeechTextEngine:
 
-    def __init__(self, speaking_lang="en", listen_lang="en-US") -> None:
+    def __init__(self, translator=None, speaking_lang="en", listen_lang="en-US",) -> None:
+        '''
+        description:
+            it consist both `speech to text` and `text to speech` modules
 
+        Inputs:
+            speaking_lang = "in what language for `text to speech` respond `respond in that language`"
+
+            listen_lang = "in what language should `speech to text` listen"
+
+        Ouputs: None
+        '''
         # Wake up commands
         self.ACTIVATION_COMMAND = [
             "hey friday", "hi friday", "are you there friday", "friday",
             "turn on", "are you there"
         ]
-
+        self.recognizer = sr.Recognizer()
+        self.translator = translator
         self.listen_lang = listen_lang
         self.speaking_lang = speaking_lang
 
     def get_audio(self, phrase_time_limit=3):
         with sr.Microphone() as src:
             print("Say...........")
-            audio = r.listen(src, phrase_time_limit=phrase_time_limit)
+            audio = self.recognizer.listen(
+                src, phrase_time_limit=phrase_time_limit)
             print("audio recognized")
 
         return audio
@@ -36,7 +43,9 @@ class SpeechTextEngine:
         text = ""
 
         try:
-            text = r.recognize_google(audio, language=lang).lower()
+            text = self.recognizer.recognize_google(
+                audio, language=lang).lower()
+
             print(f"\nrecognized text :- {text}")
 
         except sr.UnknownValueError:
@@ -46,10 +55,17 @@ class SpeechTextEngine:
 
         return text
 
-    def speech_recognition(self,  lang="en-US"):
+    def speech_recognition(self,  lang=None):  # required (mal -> eng)
+
+        # can manually change the listening language
+        listen_lang = self.listen_lang if lang == None else lang
+
         audio = self.get_audio()
-        text = self.audio_to_text(audio=audio, lang=self.listen_lang)
-        text = languageTranslate.translate(text=text)
+        text = self.audio_to_text(audio=audio, lang=listen_lang)
+
+        if self.translator != None:
+            text = self.translator.translate(text=text)  # english text
+
         text = str(text).lower()
 
         return text
@@ -59,10 +75,16 @@ class SpeechTextEngine:
             return True
         return False
 
-    def speak(self, text, lang="en"):
+    def speak(self, text, lang=None):  # required (eng -> mal)
         try:
-            text = languageTranslate_1.translate(text)
-            tts = gtts.gTTS(text, lang=self.speaking_lang)
+            # can manually change the speeking language
+            speeking_lang = self.speaking_lang if lang == None else lang
+
+            # english -> specified language
+            if self.translator != None:
+                text = self.translator.translate(text=text, reverse=True)
+
+            tts = gtts.gTTS(text, lang=speeking_lang)
             temp = "./temp.mp3"
             tts.save(temp)
             playsound(temp)
@@ -73,9 +95,15 @@ class SpeechTextEngine:
 
 if __name__ == "__main__":
 
-    spr = SpeechTextEngine()
+    sys.path.append('../')
+    from services.general_services.language_translate import LanguageTranslate
+
+    languageTranslator = LanguageTranslate(lang_from="ml", lang_to="en")
+    spr = SpeechTextEngine(translator=languageTranslator,
+                           speaking_lang="ml", listen_lang="ml-IN")
 
     while True:
+
         if spr.wakeup():
             print("Activate")
             spr.speak("Activating")

@@ -1,6 +1,8 @@
+from services.general_services.language_translate import LanguageTranslate
 from speech_recognition_engine import SpeechTextEngine
+from speech_text_client import speechTextClient
 
-sr = SpeechTextEngine()
+sr = speechTextClient
 
 
 def recheck(type: str, value: str):
@@ -9,9 +11,9 @@ def recheck(type: str, value: str):
         it affirming the input text; is that a valid input or not ?
 
     inputs:
-        type = "what type of input is this"; 
+        type = "what type of input is this";
 
-            eg:- if it's checking for the affirmation of 
+            eg:- if it's checking for the affirmation of
                  project name then: type = "project name"
 
         value = text / the input from speech recoginition

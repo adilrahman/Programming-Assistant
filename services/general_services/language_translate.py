@@ -37,7 +37,7 @@ class LanguageTranslate:
             print("Get HTML Failed!")
             return 0
 
-    def translate(self, text):
+    def translate(self, text, reverse=False):
         '''
         description:
             translate the given text to the `lang_to`
@@ -47,7 +47,11 @@ class LanguageTranslate:
         Outputs:
             return translated text `if` no error `else` return `False`
         '''
-        url = self.base_url.format(self._to, self._from, text)
+
+        if reverse:
+            url = self.base_url.format(self._from, self._to, text)
+        else:
+            url = self.base_url.format(self._to, self._from, text)
 
         html = self.__getHtmlText(url)
         if html:
