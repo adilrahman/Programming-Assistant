@@ -17,10 +17,10 @@ class SpeechTextEngine:
             "turn on", "are you there"
         ]
 
-    def get_audio(self):
+    def get_audio(self, phrase_time_limit=3):
         with sr.Microphone() as src:
             print("Say...........")
-            audio = r.listen(src, phrase_time_limit=3)
+            audio = r.listen(src, phrase_time_limit=phrase_time_limit)
             print("audio recognized")
 
         return audio

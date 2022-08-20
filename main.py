@@ -10,6 +10,7 @@ from services.github import MyGithub
 from services.general_services import WebsiteController, ErrorSolutions, TakeScreenShot
 from utils import nullcheck, recheck, yes_or_no
 from nlp.intent_classification.naive_bayes import NaiveByasModel
+from services.window_control import ScreenControl
 
 
 notion_integration_token = config.NOTION_INTEGRATION_TOKEN
@@ -46,6 +47,9 @@ screenshot = TakeScreenShot(path=screenshot_locations)
 non_active = 0
 
 intent_classifier = NaiveByasModel()
+
+screenControl = ScreenControl(
+    speech_rec=sr.get_audio, speech_to_text=sr.audio_to_text)
 
 # loading intent json for making random responses
 intent_json_file_loc = "nlp/intent_classification/intents.json"
@@ -257,6 +261,10 @@ if __name__ == "__main__":
                         screenshot.open_image(img_loc=img_loc)
                     else:
                         sr.speak("ok")
+
+                if intent == "start writing":
+                    screenControl.start_writing()
+                    sr.speak("ok. writing mode off")
 
                 if intent == "spotify":
                     os.system("spotify &")

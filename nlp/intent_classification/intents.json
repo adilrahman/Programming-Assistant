@@ -169,6 +169,23 @@
                 "ok sir",
                 "opening spotify"
             ]
+        },
+        {
+            "tag": "start writing",
+            "patterns": [
+                "write something for me",
+                "write this",
+                "start writing",
+                "write this for me",
+                "start writing",
+                "activate writing mode",
+                "i want to write something"
+            ],
+            "response": [
+                "ok sir",
+                "ok writing mode on",
+                "ok tell me what you want to write"
+            ]
         }
     ]
 }
