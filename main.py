@@ -1,6 +1,7 @@
 import json
 import os
 import random
+import re
 from services.general_services.language_translate import LanguageTranslate
 from speech_recognition_engine import SpeechTextEngine
 import config
@@ -279,11 +280,28 @@ if __name__ == "__main__":
                 if intent == "spotify":
                     os.system("spotify &")
 
-                if intent == "not a command":
-                    sr.speak("ok tell me the text")
-                    text = sr.speech_recognition()
-                    text = nullcheck(text)
-                    translated_text = languageTranslator.translate(text=text)
+                if intent == "text translation":
+
+                    patterns = [
+                        "the meaning of",
+                        "is mean by"]
+
+                    find_pattern = False
+
+                    for pattern in patterns:
+                        if re.search(pattern=pattern, string=command) != None:
+                            find_pattern = True
+                            break
+
+                    if find_pattern:
+                        text = command.split(pattern)[-1]
+                    else:
+                        sr.speak("ok tell me the text")
+                        text = sr.speech_recognition()
+                        text = nullcheck(text)
+
+                    translated_text = languageTranslator.translate(
+                        text=text)
                     sr.speak(translated_text, lang="ml")
                     pyautogui.alert(text=translated_text)
 

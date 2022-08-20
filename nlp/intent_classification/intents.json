@@ -140,6 +140,7 @@
             "patterns": [
                 "exit",
                 "close yourself",
+                "close your self",
                 "close",
                 "terminate yourself",
                 "terminate",
@@ -185,6 +186,23 @@
                 "ok sir",
                 "ok writing mode on",
                 "ok tell me what you want to write"
+            ]
+        },
+        {
+            "tag": "text translation",
+            "patterns": [
+                "can you translate a word for me",
+                "translate this",
+                "translate this",
+                "translate",
+                "translate",
+                "the meaning of",
+                "the meaning of",
+                "is mean by",
+                "is mean by"
+            ],
+            "response": [
+                "ok"
             ]
         }
     ]

@@ -50,7 +50,7 @@ class SpeechTextEngine:
             return True
         return False
 
-    def speak(self, text, lang="ml"):
+    def speak(self, text, lang="en"):
         try:
             tts = gtts.gTTS(text, lang=lang)
             temp = "./temp.mp3"
