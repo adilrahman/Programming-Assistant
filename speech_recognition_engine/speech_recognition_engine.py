@@ -14,6 +14,8 @@ class SpeechTextEngine:
             it consist both `speech to text` and `text to speech` modules
 
         Inputs:
+            translator = translator for the `speaking language (speaking_lang) to english`
+
             speaking_lang = "in what language for `text to speech` respond `respond in that language`"
 
             listen_lang = "in what language should `speech to text` listen"
@@ -31,6 +33,19 @@ class SpeechTextEngine:
         self.speaking_lang = speaking_lang
 
     def get_audio(self, phrase_time_limit=3):
+        '''
+        description: 
+            it capture the audio from microphone and return the audio signals
+
+        Inputs: 
+            phrase_time_limit = it is the maximum number of seconds that this will allow a phrase to continue before stopping
+                                and returning the part of the phrase processed before the time limit was reached
+
+
+        Outputs: audio signals
+
+        '''
+
         with sr.Microphone() as src:
             print("Say...........")
             audio = self.recognizer.listen(
@@ -40,6 +55,15 @@ class SpeechTextEngine:
         return audio
 
     def audio_to_text(self, audio, lang="en-US"):
+        '''
+        description: it convert audio to text and `return text`
+
+        Inputs: lang = in which language you want to convert 
+
+        Outputs: `recoginized text`
+
+        '''
+
         text = ""
 
         try:
@@ -56,8 +80,18 @@ class SpeechTextEngine:
         return text
 
     def speech_recognition(self,  lang=None):  # required (mal -> eng)
+        '''
+        description: 
+            it recoganize the audio and convert into text form and return it 
 
+        Inputs: 
+            lang = in what language you are speaking; if `None` select default `english` 
+
+        Outputs: text
+
+        '''
         # can manually change the listening language
+        # by changing the lang parameter
         listen_lang = self.listen_lang if lang == None else lang
 
         audio = self.get_audio()
@@ -71,11 +105,39 @@ class SpeechTextEngine:
         return text
 
     def wakeup(self):
+        '''
+        description: 
+            recoginize wakeup command
+
+        Inputs: None
+
+        Outputs: 
+                if the command is a wakeup command then:
+                        return `True`
+                 else 
+                        return `False`
+
+        '''
+
         if self.speech_recognition() in self.ACTIVATION_COMMAND:
             return True
+
         return False
 
-    def speak(self, text, lang=None):  # required (eng -> mal)
+    def speak(self, text: str, lang=None):
+        '''
+        description:
+            convert text to audio and play the audio
+
+        Inputs: 
+            text = the text you want play
+
+        Outputs: 
+            return None
+            `play the text in audio`
+
+        '''
+
         try:
             # can manually change the speeking language
             speeking_lang = self.speaking_lang if lang == None else lang
@@ -85,7 +147,7 @@ class SpeechTextEngine:
                 text = self.translator.translate(text=text, reverse=True)
 
             tts = gtts.gTTS(text, lang=speeking_lang)
-            temp = "./temp.mp3"
+            temp = "./.temp.mp3"
             tts.save(temp)
             playsound(temp)
             os.remove(temp)
@@ -93,14 +155,15 @@ class SpeechTextEngine:
             print("could not play sound")
 
 
+#---------- Testing
 if __name__ == "__main__":
 
     sys.path.append('../')
     from services.general_services.language_translate import LanguageTranslate
 
-    languageTranslator = LanguageTranslate(lang_from="ml", lang_to="en")
+    languageTranslator = LanguageTranslate(lang_from="ta", lang_to="en")
     spr = SpeechTextEngine(translator=languageTranslator,
-                           speaking_lang="ml", listen_lang="ml-IN")
+                           speaking_lang="ta", listen_lang="ta-IN")
 
     while True:
 
