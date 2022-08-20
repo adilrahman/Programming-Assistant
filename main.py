@@ -1,6 +1,7 @@
 import json
 import os
 import random
+from services.general_services.language_translate import LanguageTranslate
 from speech_recognition_engine import SpeechTextEngine
 import config
 from services.notion import NotionClient
@@ -11,6 +12,7 @@ from services.general_services import WebsiteController, ErrorSolutions, TakeScr
 from utils import nullcheck, recheck, yes_or_no
 from nlp.intent_classification.naive_bayes import NaiveByasModel
 from services.window_control import ScreenControl
+import pyautogui
 
 
 notion_integration_token = config.NOTION_INTEGRATION_TOKEN
@@ -50,6 +52,8 @@ intent_classifier = NaiveByasModel()
 
 screenControl = ScreenControl(
     speech_rec=sr.get_audio, speech_to_text=sr.audio_to_text)
+
+languageTranslator = LanguageTranslate(lang_from="en", lang_to="ml")
 
 # loading intent json for making random responses
 intent_json_file_loc = "nlp/intent_classification/intents.json"
@@ -274,6 +278,14 @@ if __name__ == "__main__":
 
                 if intent == "spotify":
                     os.system("spotify &")
+
+                if intent == "not a command":
+                    sr.speak("ok tell me the text")
+                    text = sr.speech_recognition()
+                    text = nullcheck(text)
+                    translated_text = languageTranslator.translate(text=text)
+                    sr.speak(translated_text, lang="ml")
+                    pyautogui.alert(text=translated_text)
 
                 if intent == "exit":  # for exiting program
                     exit()
