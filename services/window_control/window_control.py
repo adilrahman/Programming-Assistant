@@ -39,6 +39,7 @@ class ScreenControl:
     def press_enter(self) -> None:
         '''description : press enter'''
         pyautogui.keyDown("return")
+        pyautogui.keyUp("return")
 
     def minimize_window(self):
 

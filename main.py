@@ -268,7 +268,7 @@ if __name__ == "__main__":
                     sr.speak("should i submit this")
                     command = sr.speech_recognition()
                     command = yes_or_no(nullcheck(value=command))
-                    if "yes":
+                    if "yes" == command:
                         screenControl.press_enter()
                     sr.speak("ok")
 
