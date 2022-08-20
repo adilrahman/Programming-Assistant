@@ -36,7 +36,7 @@ class ScreenControl:
             audio = self.get_audio(phrase_time_limit=7)
             text = self.speech_to_text(audio=audio)
 
-    def press_enter() -> None:
+    def press_enter(self) -> None:
         '''description : press enter'''
         pyautogui.keyDown("return")
 

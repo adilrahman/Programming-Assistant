@@ -264,7 +264,13 @@ if __name__ == "__main__":
 
                 if intent == "start writing":
                     screenControl.start_writing()
-                    sr.speak("ok. writing mode off")
+                    sr.speak("ok. writing off")
+                    sr.speak("should i submit this")
+                    command = sr.speech_recognition()
+                    command = yes_or_no(nullcheck(value=command))
+                    if "yes":
+                        screenControl.press_enter()
+                    sr.speak("ok")
 
                 if intent == "spotify":
                     os.system("spotify &")
