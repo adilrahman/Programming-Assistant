@@ -128,7 +128,8 @@
                 "screenshot this",
                 "take this picture",
                 "capture this picture",
-                "save this picture"
+                "save this picture",
+                "take a photo of it"
             ],
             "response": [
                 "ok sir",

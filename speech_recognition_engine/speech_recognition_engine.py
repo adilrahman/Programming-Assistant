@@ -3,19 +3,26 @@ import gtts
 from playsound import playsound
 import os
 import time
+from services.general_services import LanguageTranslate
 
 r = sr.Recognizer()
+
+languageTranslate = LanguageTranslate(lang_from="ml", lang_to="en")
+languageTranslate_1 = LanguageTranslate(lang_from="en", lang_to="ml")
 
 
 class SpeechTextEngine:
 
-    def __init__(self) -> None:
+    def __init__(self, speaking_lang="en", listen_lang="en-US") -> None:
 
         # Wake up commands
         self.ACTIVATION_COMMAND = [
             "hey friday", "hi friday", "are you there friday", "friday",
             "turn on", "are you there"
         ]
+
+        self.listen_lang = listen_lang
+        self.speaking_lang = speaking_lang
 
     def get_audio(self, phrase_time_limit=3):
         with sr.Microphone() as src:
@@ -25,11 +32,11 @@ class SpeechTextEngine:
 
         return audio
 
-    def audio_to_text(self, audio):
+    def audio_to_text(self, audio, lang="en-US"):
         text = ""
 
         try:
-            text = r.recognize_google(audio).lower()
+            text = r.recognize_google(audio, language=lang).lower()
             print(f"\nrecognized text :- {text}")
 
         except sr.UnknownValueError:
@@ -39,9 +46,11 @@ class SpeechTextEngine:
 
         return text
 
-    def speech_recognition(self):
+    def speech_recognition(self,  lang="en-US"):
         audio = self.get_audio()
-        text = self.audio_to_text(audio=audio)
+        text = self.audio_to_text(audio=audio, lang=self.listen_lang)
+        text = languageTranslate.translate(text=text)
+        text = str(text).lower()
 
         return text
 
@@ -52,7 +61,8 @@ class SpeechTextEngine:
 
     def speak(self, text, lang="en"):
         try:
-            tts = gtts.gTTS(text, lang=lang)
+            text = languageTranslate_1.translate(text)
+            tts = gtts.gTTS(text, lang=self.speaking_lang)
             temp = "./temp.mp3"
             tts.save(temp)
             playsound(temp)

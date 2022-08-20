@@ -19,7 +19,7 @@ import pyautogui
 notion_integration_token = config.NOTION_INTEGRATION_TOKEN
 notion_database_id = config.NOTION_DATABASE_ID
 
-sr = SpeechTextEngine()
+sr = SpeechTextEngine(listen_lang="ml-IN", speaking_lang="ml")
 notionClient = NotionClient(token=notion_integration_token,
                             database_id=notion_database_id)
 
@@ -55,6 +55,8 @@ screenControl = ScreenControl(
     speech_rec=sr.get_audio, speech_to_text=sr.audio_to_text)
 
 languageTranslator = LanguageTranslate(lang_from="en", lang_to="ml")
+
+languageTranslator_1 = LanguageTranslate(lang_from="ml", lang_to="en")
 
 # loading intent json for making random responses
 intent_json_file_loc = "nlp/intent_classification/intents.json"
@@ -98,6 +100,7 @@ def random_response(intent: str) -> None:
 
     res = intents_response[intent]
     res = random.choice(res)
+    res = languageTranslator.translate(res)
     sr.speak(res)
 
 
@@ -109,7 +112,11 @@ if __name__ == "__main__":
             time.sleep(0.5)
             while True:  # commanding mode on
                 command = sr.speech_recognition()
-                command = check_activity(command)
+                print("before :" + command)
+                command = languageTranslator_1.translate(command)
+                command = str(command).lower()
+                print("after :" + command)
+                # command = check_activity(command)
                 intent = intent_classifier.find_intent(command=command)
                 random_response(intent=intent)
 
@@ -165,6 +172,7 @@ if __name__ == "__main__":
                 # opening websites
                 if intent == "open websites":
                     non_active = 0
+
                     name = command.split("open ")
 
                     if name == "" or len(name) == 1:
