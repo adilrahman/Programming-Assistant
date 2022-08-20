@@ -2,10 +2,10 @@ from services.general_services.language_translate import LanguageTranslate
 from speech_recognition_engine.speech_recognition_engine import SpeechTextEngine
 
 # speaking and listening language config
-speaking_lang = "ml"
-listen_lang = "ml-IN"
+speaking_lang = "ta"
+listen_lang = "ta-IN"
 
-languageTranslator = LanguageTranslate(lang_from="ml", lang_to="en")
+languageTranslator = LanguageTranslate(lang_from="ta", lang_to="en")
 
 # languageTranslator = None
 

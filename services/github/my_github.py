@@ -3,10 +3,8 @@ import json
 import sys
 import time
 import requests
-import pyautogui
-import pyperclip
 import re
-import pyclip
+import pyperclip as clipboard
 
 
 class MyGithub:
@@ -115,7 +113,7 @@ class MyGithub:
         '''
 
         time.sleep(0.2)
-        repo_url = pyclip.paste().decode("utf-8")  # it past from clipboard
+        repo_url = clipboard.paste().decode("utf-8")  # it past from clipboard
         print(repo_url)
 
         if re.search(pattern=".git", string=repo_url) != None:
