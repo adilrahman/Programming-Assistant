@@ -23,6 +23,7 @@
  
  ## Features 💡
  
+ :speaker: **YOU CAN GIVE COMMANDS IN ANY LANGUAGE**
  
  1. create new ![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=flat&logo=github&logoColor=white) repository by voice command ✅
  2. clone the created repository into the local machine by voice command ✅
