@@ -1,4 +1,5 @@
 import json
+from lib2to3.pgen2 import token
 import numpy as np
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.feature_extraction.text import CountVectorizer
@@ -10,6 +11,8 @@ from nltk import word_tokenize, PorterStemmer
 
 stemmer = PorterStemmer()
 
+stop_words = ["?", ".", "!", ","]
+
 
 def tokenizer(sentance):
     return word_tokenize(sentance)
@@ -17,6 +20,14 @@ def tokenizer(sentance):
 
 def stem(word):
     return stemmer.stem(word.lower())
+
+
+def preprocess(sentance: str) -> str:
+    tokens = tokenizer(sentance=sentance)
+    tokens = [stem(token) for token in tokens if token not in stop_words]
+    sentance = " ".join(tokens)
+
+    return sentance
 
 
 print("model imported")
@@ -54,7 +65,8 @@ class NaiveByasModel:
             `if this intent has low probability then return "not a command"`
         '''
 
-        command = [command]
+        command = [preprocess(command)]
+        print(command)
         command = self.countVectorizer.transform(command)
         command = self.tfidf_transformer.transform(command)
 
@@ -102,6 +114,7 @@ class TrainModel:
             return x_train,_train
 
         '''
+        # models and encoders saving location
         self.saving_location = "nlp/intent_classification/naive_bayes/pre_trained_model/"
         self.intents = intents_json_file
         self.training_data = self.load_training_data()
@@ -126,7 +139,7 @@ class TrainModel:
         with open(self.intents, "r") as f:
             intents = json.load(f)
 
-        vocab = []
+        # vocab = []
         tags = []
         train_data = []
         text_courps = []
@@ -135,25 +148,31 @@ class TrainModel:
             tag = intent["tag"]
             tags.append(tag)
             for pattern in intent["patterns"]:
+                pattern = preprocess(pattern)
+                print(pattern)
                 text_courps.append(pattern)
                 words = np.array(tokenizer(pattern))
-                vocab.extend(words)
+                # vocab.extend(words)
                 train_data.append((words, tag))
 
         count = CountVectorizer()
         word_count = count.fit_transform(text_courps)
+
         tfidf_transformer = TfidfTransformer(smooth_idf=True, use_idf=True)
         tfidf_transformer.fit(word_count)
         tf_idf_vector = tfidf_transformer.transform(word_count)
-        feature_names = count.get_feature_names()
+
         x_train = tf_idf_vector.toarray()
         y_train = np.array(train_data)[:, 1]
         y_train = list(y_train)
+
+        # encoding each intent names to numeric number
         for i in range(len(y_train)):
             y_train[i] = tags.index(y_train[i])
 
         data = np.concatenate(
             (x_train, np.array(y_train).reshape(-1, 1)), axis=1)
+
         np.random.shuffle(data)
 
         x_train = data[:, :-1]
