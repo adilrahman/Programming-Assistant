@@ -317,6 +317,13 @@ if __name__ == "__main__":
 
                 if intent == "wikipeadia":
 
+                    summery = wikipediaController.google_search_result(
+                        query=command)
+
+                    sr.speak(summery)
+                    pyautogui.alert(summery)
+                    continue
+
                     patterns = [
                         "what is ",
                         "tell me about ",
@@ -339,8 +346,8 @@ if __name__ == "__main__":
 
                     summery = wikipediaController.get_summery(topic=text)
                     if summery == False:
-                        sr.speak("sorry i didn't get any results")
-                        continue
+                        summery = wikipediaController.google_search_result(
+                            query=command)
 
                     sr.speak(summery)
                     pyautogui.alert(summery)

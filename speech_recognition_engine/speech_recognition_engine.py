@@ -32,7 +32,7 @@ class SpeechTextEngine:
         self.listen_lang = listen_lang
         self.speaking_lang = speaking_lang
 
-    def get_audio(self, phrase_time_limit=3):
+    def get_audio(self, phrase_time_limit=5):
         '''
         description: 
             it capture the audio from microphone and return the audio signals
