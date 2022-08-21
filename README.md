@@ -36,7 +36,8 @@
  9. play music ✅
  10. write texts in screen for you by voice command ✅
  11. language translation [eg: translate english to hindi ] ✅ 
- 12. ..............🔜
+ 12. google and wiki search summery 
+ 13. ..............🔜
  
 
  
