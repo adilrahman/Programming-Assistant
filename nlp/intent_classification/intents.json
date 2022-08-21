@@ -179,7 +179,7 @@
             ]
         },
         {
-            "tag": "spotify",
+            "tag": "music",
             "patterns": [
                 "open spotify",
                 "open spotify",
@@ -193,7 +193,7 @@
             ],
             "response": [
                 "ok sir",
-                "opening spotify"
+                "ok"
             ]
         },
         {

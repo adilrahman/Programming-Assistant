@@ -287,8 +287,11 @@ if __name__ == "__main__":
                         screenControl.press_enter()
                     sr.speak("ok")
 
-                if intent == "spotify":
-                    os.system("spotify &")
+                if intent == "music":
+                    command = command + "in youtube"
+                    websiteController.open_top_results(
+                        query=command, nums_results=1)
+                    #os.system("spotify &")
 
                 if intent == "text translation":
 
